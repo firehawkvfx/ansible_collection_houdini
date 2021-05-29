@@ -1,2 +1,42 @@
 ---
-# vars file for roles/houdini_module
+
+enforce_henv: false
+
+# the become sudo pass is only relevent for local installation if required on the host specified.
+ansible_become_pass: "{{ user_deadlineuser_pw }}"
+houdini_major_version: 18.5
+download_to_dir: /tmp/firehawk
+variable_user: "{{ ansible_user }}"
+bastionip: "{{ groups['bastionip'][0] }}"
+skip_packages: false
+houdini_install_type: 'node'
+
+# this list is used for deadline plugin compatibility
+houdini_major_version_list:
+    - '18.5'
+
+# this list of dictionaries is use to install multiple versions of houdini.
+# versions should be listed from oldest to newest.
+houdini_version_list:
+# - houdini_major_version: "18.0"
+#   houdini_auto_version: True
+#   houdini_minor_version: "auto"
+#   houdini_linux_tar_filename: "auto"
+#   houdini_build: "production"
+- houdini_major_version: 18.5
+  houdini_auto_version: True
+  houdini_minor_version: "auto"
+  houdini_linux_tar_filename: "auto"
+  houdini_build: "production"
+# - houdini_major_version: "18.0"
+#   houdini_auto_version: False
+#   houdini_minor_version: "18.0.428"
+#   houdini_linux_tar_filename: "houdini-18.0.428-linux_x86_64_gcc6.3.tar.gz"
+#   houdini_build: "daily"
+
+houdini_license_server_version_list:
+- houdini_major_version: 18.5
+  houdini_auto_version: True
+  houdini_minor_version: "auto"
+  houdini_linux_tar_filename: "auto"
+  houdini_build: "production"
