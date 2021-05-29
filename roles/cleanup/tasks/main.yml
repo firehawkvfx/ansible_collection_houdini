@@ -1,0 +1,8 @@
+- name: "Clean contents of temp paths {{ download_to_dir }}/" # important before building an ami
+  shell: |
+    rm -fr {{ item }}
+  become: true
+  with_items:
+  - "{{ download_to_dir }}/*"
+  - "/var/tmp/*"
+  - "/tmp/*"

@@ -1,0 +1,117 @@
+### modify houdini environment vars
+
+- name: show first existing file or ignore if none do
+  set_fact:
+    houdini_template: "{{ lookup('first_found', findme) }}"
+  vars:
+    findme:
+      - "/secrets/overrides/ansible/collections/ansible_collections/firehawkvfx/houdini/roles/install_deadline_role/files/houdini_template.env"
+      - "houdini_template.env"
+
+- debug:
+    var: houdini_template
+
+- name: Generate houdini.env config from template
+  template:
+    src: "{{ houdini_template }}"
+    dest: "/tmp/houdini{{ houdini_version_item.houdini_major_version }}_from_template.env"
+    mode: '0666'
+  vars:
+    houdini_major_version: "{{ houdini_version_item.houdini_major_version }}"
+  become: yes
+  connection: local
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: copy env
+  copy:
+    src: "/tmp/houdini{{ houdini_version_item.houdini_major_version }}_from_template.env"
+    dest: "/home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/houdini{{ houdini_version_item.houdini_major_version }}_from_template.env"
+    mode: '0600'
+    owner: "deadlineuser"
+  become: true
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: ensure houdini.env file exists
+  file:
+    path: "/home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/houdini.env"
+    state: touch
+    mode: '0600'
+    owner: "deadlineuser"
+  become: yes
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: "Get difference from two houdini.env files"
+  command: diff /home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/houdini.env /home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/houdini{{ houdini_version_item.houdini_major_version }}_from_template.env
+  failed_when: "diff.rc > 1"
+  register: diff
+  become: yes
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: debug output
+  debug: msg="{{ diff.stdout }}"
+
+- name: houdini_version_item
+  debug:
+    var: houdini_version_item
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: copy houdini.env and overwrite
+  copy:
+    src: /tmp/houdini{{ houdini_version_item.houdini_major_version }}_from_template.env
+    dest: "/home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/houdini.env"
+  become: true
+  tags:
+  - cloud-install
+  - onsite-install
+
+
+- name: Add alias for houdini
+  lineinfile:
+    state: present
+    path: /home/deadlineuser/.bashrc
+    line: "alias h{{ houdini_version_item.houdini_major_version }}='cwd=\"$(pwd)\" && cd /opt/hfs{{ houdini_version_item.houdini_major_version }}/ && source houdini_setup && cd $cwd && houdinifx'"
+    backup: true
+    owner: "deadlineuser"
+    regexp: ".*alias h{{ houdini_version_item.houdini_major_version }}=.*"
+  become: yes
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: Add alias for hython
+  lineinfile:
+    state: present
+    path: /home/deadlineuser/.bashrc
+    line: "alias hy{{ houdini_version_item.houdini_major_version }}='cwd=\"$(pwd)\" && cd /opt/hfs{{ houdini_version_item.houdini_major_version }}/ && source houdini_setup && cd $cwd && hython'"
+    backup: true
+    owner: "deadlineuser"
+    regexp: ".*alias hy{{ houdini_version_item.houdini_major_version }}=.*"
+  become: yes 
+  tags:
+  - cloud-install
+  - onsite-install
+
+- name: Add alias for houdini_setup environment
+  lineinfile:
+    state: present
+    path: /home/deadlineuser/.bashrc
+    line: "alias henv{{ houdini_version_item.houdini_major_version }}='cwd=\"$(pwd)\" && cd /opt/hfs{{ houdini_version_item.houdini_major_version }}/ && source houdini_setup && cd $cwd'"
+    backup: true
+    owner: "deadlineuser"
+    regexp: ".*alias henv{{ houdini_version_item.houdini_major_version }}=.*"
+  become: yes 
+  tags:
+  - cloud-install
+  - onsite-install
+  
+### end modify houdini environment vars

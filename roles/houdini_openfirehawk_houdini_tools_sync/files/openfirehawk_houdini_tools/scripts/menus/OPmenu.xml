@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menuDocument>
+    # Update Rop Output Paths for Selected SOP/TOP Nodes
+    <menu>
+        <scriptItem id="opmenu.update_rop_template_for_selected_nodes">
+        <label>Update Rop Template for Selected SOP/TOP Nodes</label>
+        <context>
+        <expression>
+<![CDATA[
+### Determine if item is visible ###
+import sys
+import os
+
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+node = kwargs["node"]
+type_name = node.type().name()
+
+if type_name not in firehawk_submit.submit(node).output_types and type_name != 'ropfetch':
+    return False
+
+return True
+]]>
+        </expression>
+        </context>
+        <scriptCode>
+<![CDATA[
+
+import sys
+import os
+
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+arguments2 = '\n  '.join(['%s = %s' % (k,w) for (k,w) in kwargs.items()])
+node = kwargs["node"]
+
+versiondb=False
+firehawk_submit.submit(node).update_rop_output_paths_for_selected_nodes(kwargs, versiondb)
+]]>
+        </scriptCode>
+        </scriptItem>
+    </menu>
+    # Multiparm version tracking
+    <menu>
+        <scriptItem id="opmenu.versiondb_update_rop_template_for_selected_nodes">
+        <label>VersionDB Update Rop Template for Selected SOP/TOP Nodes</label>
+        <context>
+        <expression>
+<![CDATA[
+### Determine if item is visible ###
+import sys
+import os
+
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+node = kwargs["node"]
+type_name = node.type().name()
+
+if type_name not in firehawk_submit.submit(node).output_types and type_name != 'ropfetch':
+    return False
+
+return True
+]]>
+        </expression>
+        </context>
+        <scriptCode>
+<![CDATA[
+
+import sys
+import os
+
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+arguments2 = '\n  '.join(['%s = %s' % (k,w) for (k,w) in kwargs.items()])
+node = kwargs["node"]
+
+versiondb=True
+firehawk_submit.submit(node).update_rop_output_paths_for_selected_nodes(kwargs, versiondb)
+]]>
+        </scriptCode>
+        </scriptItem>
+    </menu>
+    # Assign node as preflight
+    <menu>
+        <scriptItem id="opmenu.assign_node_for_topnet_preflight">
+        <label>Assign Node For TOPNET Preflight</label>
+        <context>
+        <expression>
+<![CDATA[
+### Determine if item is visible ###
+
+node = kwargs["node"]
+category = node.type().category().name()
+
+if category != 'Top':
+    return False
+
+return True
+]]>
+        </expression>
+        </context>
+        <scriptCode>
+<![CDATA[
+print "Assign Node For TOPNET Preflight"
+import sys
+
+import os
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+arguments2 = '\n  '.join(['%s = %s' % (k,w) for (k,w) in kwargs.items()])
+node = kwargs["node"]
+
+firehawk_submit.submit(node).assign_preflight()
+]]>
+        </scriptCode>
+        </scriptItem>
+    </menu>
+    ### Dirty Upstream Source Nodes ###
+    <menu>
+        <scriptItem id="opmenu.dirty_upstream_source_nodes">
+        <label>Dirty Upstream Source Nodes</label>
+        <context>
+        <expression>
+<![CDATA[
+### Determine if item is visible ###
+
+node = kwargs["node"]
+category = node.type().category().name()
+
+if category != 'Top':
+    return False
+
+return True
+]]>
+        </expression>
+        </context>
+        <scriptCode>
+<![CDATA[
+arguments2 = '\n  '.join(['%s = %s' % (k,w) for (k,w) in kwargs.items()])
+
+import sys
+
+import os
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+node = kwargs["node"]
+
+firehawk_submit.submit(node).dirty_upstream_source_nodes()
+]]>
+        </scriptCode>
+        </scriptItem>
+    </menu>
+    ### Protect Upstream Workitem Directories ###
+    <menu>
+        <scriptItem id="opmenu.protect_upstream_workitem_directories">
+        <label>Protect Upstream Workitem Directories</label>
+        <context>
+        <expression>
+<![CDATA[
+### Determine if item is visible ###
+
+node = kwargs["node"]
+category = node.type().category().name()
+
+if category != 'Top':
+    return False
+
+return True
+]]>
+        </expression>
+        </context>
+        <scriptCode>
+<![CDATA[
+arguments2 = '\n  '.join(['%s = %s' % (k,w) for (k,w) in kwargs.items()])
+
+import sys
+
+import os
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+node = kwargs["node"]
+
+firehawk_submit.submit(node).protect_upstream_workitem_directories()
+]]>
+        </scriptCode>
+        </scriptItem>
+    </menu>
+    ### Submit With Preflight ###
+    <menu>
+        <scriptItem id="opmenu.submit_with_preflight">
+        <label>Cook (With Preflight If Available)</label>
+        <context>
+        <expression>
+<![CDATA[
+### Determine if item is visible ###
+
+node = kwargs["node"]
+category = node.type().category().name()
+
+if category != 'Top':
+    return False
+
+return True
+]]>
+        </expression>
+        </context>
+        <scriptCode>
+<![CDATA[
+arguments2 = '\n  '.join(['%s = %s' % (k,w) for (k,w) in kwargs.items()])
+# hou.ui.displayMessage('My Action with kwargs:\n  ' + arguments)
+
+import sys
+
+import os
+menu_path = os.environ['FIREHAWK_HOUDINI_TOOLS'] + '/scripts/modules'
+sys.path.append(menu_path)
+
+import firehawk_submit as firehawk_submit
+
+node = kwargs["node"]
+
+firehawk_submit.submit(node).cook()
+]]>
+        </scriptCode>
+        </scriptItem>
+    </menu>
+    # Below contributions for otl versioning by Juraj Tomori https://github.com/jtomori
+    <menu>
+        <scriptItem id="opmenu.save_as_new_version">
+            <insertAfter>opmenu.saveoptype</insertAfter>
+            <label>Save as New Version</label>
+            <context>
+            <expression>
+<![CDATA[
+node = kwargs["node"]
+if node.matchesCurrentDefinition():
+    return False
+if not node.isNetwork():
+    return False
+hda_def = node.type().definition()
+if not hda_def:
+    return False
+    
+options = hda_def.options()
+if not options.lockContents():
+    return False
+if node.isInsideLockedHDA() and not node.isEditableInsideLockedHDA():
+    return False
+if hou.hda.safeguardHDAs():
+    return False
+if not node.type().isWritable():
+    return False
+if not node.type().areContentsViewable():
+    return False
+return True
+]]>
+            </expression>
+	        </context>
+            <scriptCode>
+<![CDATA[
+# unlocked node
+unlocked_node = kwargs["node"]
+unlocked_def = unlocked_node.type().definition()
+current_name = unlocked_node.type().name()
+# disk path of asset
+asset_path = unlocked_def.libraryFilePath()
+# get new name and save a new version
+choice, new_name = hou.ui.readInput(message="Please enter new node name", title="New name", buttons=("OK", "Cancel"), close_choice=1, initial_contents=current_name)
+if choice == 0:
+    node_type_category = unlocked_node.type().category()
+    unlocked_def.copyToHDAFile(asset_path, new_name=new_name)
+    # get definition of new version and update from unlocked node
+    new_type = hou.nodeType(node_type_category, new_name)
+    new_def = new_type.definition()
+    new_def.updateFromNode(unlocked_node)
+    # change unlocked node to the new definition and match current definition
+    unlocked_node = unlocked_node.changeNodeType(new_name)
+    unlocked_node.matchCurrentDefinition()
+]]>
+            </scriptCode>
+        </scriptItem>
+    </menu>
+</menuDocument>

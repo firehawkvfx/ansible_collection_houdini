@@ -1,0 +1,75 @@
+- name: dir permissions on /prod/assets/
+  file:
+    path: /prod/assets/
+    state: directory
+    mode: u=wrX,g=wrX,o-rwx
+    owner: deadlineuser
+    group: syscontrol
+    recurse: true
+  become: true
+
+- name: dir permissions on /prod/assets/openfirehawk-houdini-tools
+  file:
+    path: /prod/assets/openfirehawk-houdini-tools
+    state: directory
+    mode: u=wrX,g=wrX,o-rwx
+    owner: deadlineuser
+    group: syscontrol
+    recurse: true
+  become: true
+
+- name: ensure all mounts are present
+  command: sudo mount -a
+  become_user: deployuser
+  connection: local
+
+- name: set user for sync
+  set_fact:
+    push_user: "deployuser"
+
+- name: set bucket for sync
+  set_fact:
+    bucket: "{{ repositories_bucket }}"
+
+- name: ensure bucket exists
+  import_role:
+    name: firehawkvfx.core.s3_bucket
+
+- name: set bucket for sync
+  set_fact:
+    bucket: "{{ repositories_bucket }}/openfirehawk-houdini-tools"
+
+- name: s3-sync openfirehawk-houdini-tools push
+  import_role:
+    name: firehawkvfx.core.s3_sync
+  vars:
+    mode: "push"
+    basedir: "{{ firehawk_sync_source }}"
+    exclude: ".git/*"
+    filename: "*"
+    sync_user: "{{ push_user }}"
+  connection: local
+
+- name: set user for sync
+  set_fact:
+    pull_user: "deadlineuser"
+
+- name: s3-sync openfirehawk-houdini-tools pull
+  import_role:
+    name: firehawkvfx.core.s3_sync
+  vars:
+    mode: "pull"
+    basedir: "{{ firehawk_sync_target }}"
+    exclude: ".git/*"
+    filename: "*"
+    sync_user: "{{ pull_user }}"
+
+- name: dir permissions on /prod/assets/hda.  note permissions aren't being set correctly for group for some reason.
+  file:
+    path: /prod/assets/hda
+    state: directory
+    owner: deadlineuser
+    group: syscontrol
+    mode: u=wrX,g=wrX,o-rwx
+    recurse: true
+  become: true
