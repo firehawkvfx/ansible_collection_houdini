@@ -1,0 +1,7 @@
+- name: install houdini plugins for items in list
+  include: configure_plugins.yml
+  loop: "{{ houdini_major_version_list }}"
+  loop_control:
+    loop_var: houdini_major_version
+  when: houdini_install_type != "server"
+
