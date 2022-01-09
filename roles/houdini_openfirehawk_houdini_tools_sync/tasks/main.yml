@@ -33,7 +33,7 @@
 
 - name: ensure bucket exists
   import_role:
-    name: firehawkvfx.ansible_collection_core.s3_bucket
+    name: firehawkvfx.core.s3_bucket
 
 - name: set bucket for sync
   set_fact:
@@ -41,7 +41,7 @@
 
 - name: s3-sync openfirehawk-houdini-tools push
   import_role:
-    name: firehawkvfx.ansible_collection_core.s3_sync
+    name: firehawkvfx.core.s3_sync
   vars:
     mode: "push"
     basedir: "{{ firehawk_sync_source }}"
@@ -56,7 +56,7 @@
 
 - name: s3-sync openfirehawk-houdini-tools pull
   import_role:
-    name: firehawkvfx.ansible_collection_core.s3_sync
+    name: firehawkvfx.core.s3_sync
   vars:
     mode: "pull"
     basedir: "{{ firehawk_sync_target }}"

@@ -1,4 +1,4 @@
-# This role is a clone from firehawkvfx.ansible_collection_core collection due to a bug in pcker which is...unfortunate. https://github.com/hashicorp/packer/issues/10314
+# This role is a clone from firehawkvfx.core collection due to a bug in pcker which is...unfortunate. https://github.com/hashicorp/packer/issues/10314
 - name: "Sync S3 {{ mode }} user:"
   debug:
     msg: "sync_user:{{ sync_user }}"

@@ -1,5 +1,5 @@
 collections:
-  - firehawkvfx.ansible_collection_core
+  - firehawkvfx.core
 
 galaxy_info:
   author: your name
