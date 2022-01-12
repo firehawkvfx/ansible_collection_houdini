@@ -275,9 +275,9 @@ else:
             # os.remove(local_filename)
             install_file = os.path.join(tmp_folder, os.path.splitext(os.path.splitext(os.path.basename(local_filename))[0])[0], 'houdini.install')
             print 'Install File', install_file
-            # ./houdini.install --auto-install --accept-EULA 2020-05-05 --make-dir /opt/houdini/16.0.705
+            # ./houdini.install --auto-install --accept-EULA 2021-10-13 --make-dir /opt/houdini/16.0.705
             out_dir = create_output_dir(install_dir, build)
-            flags = '--auto-install --accept-EULA 2020-05-05 --install-houdini --no-license --install-hfs-symlink --make-dir'
+            flags = '--auto-install --accept-EULA 2021-10-13 --install-houdini --no-license --install-hfs-symlink --make-dir'
             if lic_server:
                 pass
             cmd = 'sudo ./houdini.install {flags} {dir}'.format(

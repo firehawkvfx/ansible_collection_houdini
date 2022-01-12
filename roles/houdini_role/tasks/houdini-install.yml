@@ -153,7 +153,7 @@
     cd /opt/houdini_install_script/
     . /opt/houdini_install_script/exit_test.sh
     tar -xvf {{ download_to_dir }}/{{ houdini_linux_tar_filename }} -C {{ download_to_dir }}; exit_test
-    sudo {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}/houdini.install --auto-install --accept-EULA 2020-05-05 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/{{ build }}; exit_test
+    sudo {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}/houdini.install --auto-install --accept-EULA 2021-10-13 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/{{ build }}; exit_test
   when: houdini_version_item.houdini_auto_version
   register: houdini_install_out
   become: true
@@ -176,7 +176,7 @@
     cd /opt/houdini_install_script/
     . /opt/houdini_install_script/exit_test.sh
     tar -xvf {{ download_to_dir }}/{{ houdini_linux_tar_filename }} -C {{ download_to_dir }}; exit_test
-    sudo {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}/houdini.install --auto-install --accept-EULA 2020-05-05 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/{{ houdini_version_item.houdini_minor_version }}; exit_test
+    sudo {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}/houdini.install --auto-install --accept-EULA 2021-10-13 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/{{ houdini_version_item.houdini_minor_version }}; exit_test
   register: houdini_install_out
   when: houdini_install_type != "server" and not houdini_version_item.houdini_auto_version
 
@@ -256,14 +256,14 @@
   become: true
   when: houdini_install_type == "server"
 
-# sudo ./houdini.install --auto-install --accept-EULA 2020-05-05 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/18.0.221
+# sudo ./houdini.install --auto-install --accept-EULA 2021-10-13 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/18.0.221
 
 - name: SERVER INSTALL - install houdini with correct dir.
   shell: |
     # set -x
     cd {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}
     ls
-    sudo ./houdini.install --accept-EULA 2020-05-05 --install-houdini --install-license --install-hfs-symlink --auto-install
+    sudo ./houdini.install --accept-EULA 2021-10-13 --install-houdini --install-license --install-hfs-symlink --auto-install
   register: houdini_install_out
   # become_user: "{{ variable_user }}"
   become: true
