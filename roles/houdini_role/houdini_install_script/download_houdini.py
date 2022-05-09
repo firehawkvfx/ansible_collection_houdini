@@ -15,7 +15,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-b", "--buildtype", type=str, help="Use latest daily build (d/daily, p/production)")
-parser.add_argument("-v", "--majorversion", type=str, help="Major version (18.0, 18.5, etc)")
+parser.add_argument("-v", "--majorversion", type=str, help="Major version (18.0, 19.0, etc)")
 
 _args, other_args = parser.parse_known_args()
 
@@ -28,7 +28,7 @@ if _args.buildtype:
         print("get production build")
         only_production = True
 
-majorversion = "18.5"
+majorversion = "19.0"
 if _args.majorversion:
     majorversion = str(float(_args.majorversion))
 
