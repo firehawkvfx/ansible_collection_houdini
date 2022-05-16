@@ -11,6 +11,7 @@
     regexp: |
       [Houdini{{ houdini_major_version | replace('.', '_') }}_Hython_Executable]
   check_mode: yes
+  become: true
   register: hython_block_exists
 
 - name: "Check if settings for {{ houdini_major_version }} are present in plugin settings"
@@ -19,6 +20,7 @@
     line: "[Houdini{{ houdini_major_version | replace('.', '_') }}_Hython_Executable]"
     state: present
   check_mode: yes
+  become: true
   register: hython_block_exists
 
 - debug:
@@ -47,6 +49,7 @@
     line: "[Houdini{{ houdini_major_version | replace('.', '_') }}_SimTracker]"
     state: present
   check_mode: yes
+  become: true
   register: simtracker_block_exists
 
 - name: "Blockin file to add h{{ houdini_major_version }} support"
@@ -72,6 +75,7 @@
     regexp: |
       [Houdini{{ houdini_major_version | replace('.', '_') }}_Hython_Executable]
   check_mode: yes
+  become: true
   register: hython_block_exists
 
 - name: "Check if settings for Mantra {{ houdini_major_version }} are present in plugin settings"
@@ -80,6 +84,7 @@
     line: "[Houdini{{ houdini_major_version | replace('.', '_') }}_Mantra_Executable]"
     state: present
   check_mode: yes
+  become: true
   register: mantra_block_exists
 
 - debug:
@@ -100,5 +105,5 @@
       Description=The path to the Mantra executable used for rendering.
     marker: "\n# {mark} ANSIBLE MANAGED BLOCK Houdini{{ houdini_major_version | replace('.', '_') }}_Mantra_Executable\n"
   when: (mantra_block_exists is changed) or (mantra_block_exists is failed)
-
+  become: true
 
