@@ -5,7 +5,7 @@
   debug:
     var: houdini_major_version
 
-- name: Check content of file /opt/Thinkbox/DeadlineRepository10/plugins/Houdini/Houdini.param
+- name: with sudo Check content of file /opt/Thinkbox/DeadlineRepository10/plugins/Houdini/Houdini.param
   replace:
     path: /opt/Thinkbox/DeadlineRepository10/plugins/Houdini/Houdini.param
     regexp: |
