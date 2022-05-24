@@ -149,7 +149,7 @@
     variable_user: "deadlineuser"
     houdini_install_type: 'node' # type can be node or server
     houdini_major_version_list:
-        - '19.0'
+        # - '19.0'
   # vars_files:
   #   - /deployuser/ansible/group_vars/all/vars
 
