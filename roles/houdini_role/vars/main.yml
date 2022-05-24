@@ -27,7 +27,7 @@ houdini_version_list:
   houdini_auto_version: True
   houdini_minor_version: "auto"
   houdini_linux_tar_filename: "auto"
-  houdini_build: "production"
+  houdini_build: "daily"
 # - houdini_major_version: "18.0"
 #   houdini_auto_version: False
 #   houdini_minor_version: "18.0.428"
