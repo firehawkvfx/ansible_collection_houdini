@@ -28,9 +28,10 @@ if _args.buildtype:
         print("get production build")
         only_production = True
 
-majorversion = "19.0"
-if _args.majorversion:
-    majorversion = str(float(_args.majorversion))
+if not _args.majorversion:
+    raise ValueError("--majorversion must be defined")
+
+majorversion = str(float(_args.majorversion))
 
 # Code that provides convenient Python wrappers to call into the API:
 
