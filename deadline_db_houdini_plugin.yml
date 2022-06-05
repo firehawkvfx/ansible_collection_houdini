@@ -13,7 +13,7 @@
     houdini_install_type: 'node'
     secrets_path: "{{ playbook_dir }}"
     vars_files_locs: [ "/{{ secrets_path }}/overrides/ansible/collections/ansible_collections/firehawkvfx/houdini/vars/main.yml", "{{ playbook_dir }}/vars/main.yml" ] # The first file found will be used, allowing the one in your secrets location to override defaults.
-    houdini_major_version_list:
+    houdini_major_version_list: "{{ houdini_version_list | map(attribute='houdini_major_version') }}"
         # - '19.0'
   # vars_files:
   #   - /deployuser/ansible/group_vars/all/vars
