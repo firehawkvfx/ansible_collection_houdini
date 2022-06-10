@@ -4,9 +4,9 @@
     var: item
   with_items: "{{ houdini_version_list }}"
 
-- name: Ansible ensure python2.7libs dir exists
+- name: Ansible ensure python2.7libs / pythonXlibs dir exists
   file:
-    path: "/home/deadlineuser/houdini{{ item.houdini_major_version }}/python2.7libs/"
+    path: "/home/deadlineuser/houdini{{ item.houdini_major_version }}/{{ item.python_libs_folder }}/"
     # strange since this dir doesn't exist
     state: directory
     mode: u=rX,g=rX,o=r
@@ -71,9 +71,9 @@
   vars:
     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
-- name: set dir permisisons python2.7libs
+- name: set dir permisisons python2.7libs / pythonXlibs
   file:
-    path: "/home/deadlineuser/houdini{{ item.houdini_major_version }}/python2.7libs/"
+    path: "/home/deadlineuser/houdini{{ item.houdini_major_version }}/{{ item.python_libs_folder }}/"
     owner: deadlineuser
     group: syscontrol
     state: directory
@@ -89,7 +89,7 @@
   copy:
     src: "/var/tmp/submission/Houdini/Client/CallDeadlineCommand.py"
     remote_src: true
-    dest: "/home/deadlineuser/houdini{{ item.houdini_major_version }}/python2.7libs/"
+    dest: "/home/deadlineuser/houdini{{ item.houdini_major_version }}/{{ item.python_libs_folder }}/"
   become_user: deadlineuser
   become: yes
   with_items: "{{ houdini_version_list }}"
