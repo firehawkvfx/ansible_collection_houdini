@@ -148,6 +148,13 @@
   vars:
     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
+- name: Creating a file with content
+  copy:
+    dest: "/tmp/houdini_download_result.txt"
+    content: |
+      {{ build }}
+  delegate_to: localhost
+
 - name: Install Houdini 
   shell: |
     cd /opt/houdini_install_script/
