@@ -32,9 +32,9 @@
           - install_deadline_db
     tags:
     - always
-    loop: "{{ houdini_major_version_list }}"
+    loop: "{{ houdini_version_list }}"
     loop_control:
-      loop_var: houdini_major_version
+      loop_var: houdini_item
     when: houdini_install_type != "server"
 
   - name: ensure db is still valid.  a corrupted db may fail at this point if entryies have not been modified correctly
