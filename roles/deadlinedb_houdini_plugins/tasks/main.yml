@@ -33,7 +33,7 @@
 # - name: "Blockin file to add h{{ houdini_item.houdini_major_version }} support"
 #   blockinfile:
 #     path: /opt/Thinkbox/DeadlineRepository10/plugins/Houdini/Houdini.param
-#     backup: true
+#     backup: false
 #     block: |
 #       [Houdini{{ houdini_item.houdini_major_version | replace('.', '_') }}_Hython_Executable]
 #       Label=Houdini {{ houdini_item.houdini_major_version }} Hython Executable
@@ -59,7 +59,7 @@
 # - name: "Blockin file to add h{{ houdini_item.houdini_major_version }} support"
 #   blockinfile:
 #     path: /opt/Thinkbox/DeadlineRepository10/plugins/Houdini/Houdini.param
-#     backup: true
+#     backup: false
 #     block: |
 #       [Houdini{{ houdini_item.houdini_major_version | replace('.', '_') }}_SimTracker]
 #       Label=Houdini {{ houdini_item.houdini_major_version }} Sim Tracker File
@@ -98,7 +98,7 @@
 - name: "Blockin file to add h{{ houdini_item.houdini_major_version }} Mantra support"
   blockinfile:
     path: /opt/Thinkbox/DeadlineRepository10/plugins/Mantra/Mantra.param
-    backup: true
+    backup: false
     block: |
       [Mantra{{ houdini_item.houdini_major_version | replace('.', '_') }}_Executable]
       Label=Mantra {{ houdini_item.houdini_major_version }} Executable
