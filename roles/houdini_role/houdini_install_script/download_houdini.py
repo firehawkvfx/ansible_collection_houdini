@@ -15,7 +15,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-b", "--buildtype", type=str, help="Use latest daily build (d/daily, p/production)")
-parser.add_argument("-v", "--majorversion", type=str, help="Major version (18.0, 19.0, etc)")
+parser.add_argument("-v", "--majorversion", type=str, help="Major version (18.0, 19.5, etc)")
 
 _args, other_args = parser.parse_known_args()
 
