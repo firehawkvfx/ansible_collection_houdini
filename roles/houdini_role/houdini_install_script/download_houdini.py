@@ -3,10 +3,12 @@ import re
 import time
 import json
 import base64
-try:
-    import html.parser as HTMLParser
-except ImportError:
-    import HTMLParser
+import html
+import html.parser as HTMLParser
+# try:
+#     import html.parser as HTMLParser
+# except ImportError:
+#     import HTMLParser
 import requests
 import hashlib
 import shutil
@@ -165,7 +167,7 @@ def _extract_traceback_from_response(response):
     if len(traceback) == 0:
         traceback = error_message
 
-    return HTMLParser.HTMLParser().unescape(traceback)
+    return html.unescape(traceback)
 
 
 
@@ -190,9 +192,9 @@ if __name__ == '__main__':
 
     latest_release = service.download.get_daily_build_download(
         product='houdini', version=majorversion, build=latest_build, platform='linux')
-    
+
     query = ( latest_release['filename'], latest_release['download_url'] )
-    
+
     # return query
     print('File: {}'.format( latest_release['filename'] ) )
     print('URL: {}'.format( latest_release['download_url'] ) )
