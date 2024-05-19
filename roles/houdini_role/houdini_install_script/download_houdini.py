@@ -15,7 +15,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-b", "--buildtype", type=str, help="Use latest daily build (d/daily, p/production)")
-parser.add_argument("-v", "--majorversion", type=str, help="Major version (18.0, 19.0, etc)")
+parser.add_argument("-v", "--majorversion", type=str, help="Major version (18.0, 20.0, etc)")
 
 _args, other_args = parser.parse_known_args()
 
@@ -190,9 +190,9 @@ if __name__ == '__main__':
 
     latest_release = service.download.get_daily_build_download(
         product='houdini', version=majorversion, build=latest_build, platform='linux')
-    
+
     query = ( latest_release['filename'], latest_release['download_url'] )
-    
+
     # return query
     print('File: {}'.format( latest_release['filename'] ) )
     print('URL: {}'.format( latest_release['download_url'] ) )
