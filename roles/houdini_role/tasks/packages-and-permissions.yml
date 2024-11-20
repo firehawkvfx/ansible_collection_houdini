@@ -64,7 +64,7 @@
   vars:
     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
-- name: install pip
+- name: install python3.11-pip
   package:
     name: python3.11-pip
     state: latest
