@@ -26,9 +26,9 @@
   become: true
 
 - name: "set permissions on /home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/scripts/"
-  file: 
+  file:
     dest: "/home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/scripts/"
-    owner: deadlineuser 
+    owner: deadlineuser
     group: deadlineuser
     mode: u=rwX,g=r
     recurse: yes
@@ -36,9 +36,9 @@
 
 
 - name: "set permissions on /home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/scripts/"
-  file: 
+  file:
     dest: "/home/deadlineuser/houdini{{ houdini_version_item.houdini_major_version }}/scripts/menus/"
-    owner: deadlineuser 
+    owner: deadlineuser
     group: deadlineuser
     mode: u=rwX,g=r
     recurse: yes
@@ -52,10 +52,12 @@
     cd /opt/houdini_install_script/
     . /opt/houdini_install_script/exit_test.sh
     sesi_client_id={{ sesi_client_id }} sesi_client_secret_key={{ sesi_client_secret_key }} python /opt/houdini_install_script/download_houdini.py --buildtype {{ houdini_version_item.houdini_build }} --majorversion {{ houdini_version_item.houdini_major_version }} ; exit_test
+  args:
+    executable: /bin/bash
   register: houdini_query_out
   become: true
   when: houdini_version_item.houdini_auto_version
-  environment:
+  # environment:
     # sesi_client_id: "{{ lookup('env','sesi_client_id') }}"
     # sesi_client_secret_key: "{{ lookup('env','sesi_client_secret_key') }}"
     # sesi_client_id: sesi_client_id
@@ -120,7 +122,7 @@
     path: "{{ download_to_dir }}"
     state: directory
     mode: u=rwX,g=rwX,o=rwX
-    owner: deadlineuser 
+    owner: deadlineuser
     group: syscontrol
   become: true
 
@@ -155,12 +157,14 @@
       {{ build }}
   delegate_to: localhost
 
-- name: Install Houdini 
+- name: Install Houdini
   shell: |
     cd /opt/houdini_install_script/
     . /opt/houdini_install_script/exit_test.sh
     tar -xvf {{ download_to_dir }}/{{ houdini_linux_tar_filename }} -C {{ download_to_dir }}; exit_test
     sudo {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}/houdini.install --auto-install --accept-EULA 2021-10-13 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/{{ build }}; exit_test
+  args:
+    executable: /bin/bash
   when: houdini_version_item.houdini_auto_version
   register: houdini_install_out
   become: true
@@ -184,6 +188,8 @@
     . /opt/houdini_install_script/exit_test.sh
     tar -xvf {{ download_to_dir }}/{{ houdini_linux_tar_filename }} -C {{ download_to_dir }}; exit_test
     sudo {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}/houdini.install --auto-install --accept-EULA 2021-10-13 --install-houdini --no-license --install-hfs-symlink --make-dir /opt/houdini/{{ houdini_version_item.houdini_minor_version }}; exit_test
+  args:
+    executable: /bin/bash
   register: houdini_install_out
   when: houdini_install_type != "server" and not houdini_version_item.houdini_auto_version
 
@@ -196,6 +202,8 @@
     cd /opt/hfs{{ houdini_version_item.houdini_major_version }}
     sudo sed -i '/licensingMode = sesinetd/s/^# //g' /opt/hfs{{ houdini_version_item.houdini_major_version }}/houdini/Licensing.opt
     sudo cat /opt/hfs{{ houdini_version_item.houdini_major_version }}/houdini/Licensing.opt
+  args:
+    executable: /bin/bash
   register: houdini_hserver_out
   become: true
   when: houdini_install_type != "server"
@@ -203,7 +211,7 @@
 
 ### SERVER INSTALL
 - name: SERVER INSTALL - check if hserver file exists
-  stat: 
+  stat:
     path: /opt/hfs{{ houdini_version_item.houdini_major_version }}/bin/hserver
   register: hserver_check
   become: true
@@ -217,6 +225,8 @@
     else
       echo "hserver is not running.  No need to kill process"
     fi
+  args:
+    executable: /bin/bash
   become: true
   when: houdini_install_type == "server" and hserver_check.stat.exists
 
@@ -237,6 +247,8 @@
     echo "$dir"
     sudo mkdir -p "$dir"
     cd "$dir"
+  args:
+    executable: /bin/bash
   register: houdini_install_out
   become_user: "{{ variable_user }}"
   become: true
@@ -248,6 +260,8 @@
     dir={{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}
     cd {{ download_to_dir }}
     sudo tar -xvf {{ houdini_linux_tar_filename }} -C "{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}" --strip-components 1
+  args:
+    executable: /bin/bash
   register: houdini_install_out
   become_user: "{{ variable_user }}"
   become: true
@@ -271,6 +285,8 @@
     cd {{ download_to_dir }}/{{ houdini_linux_tar_filename | regex_replace('.tar.gz$', '') }}
     ls
     sudo ./houdini.install --accept-EULA 2021-10-13 --install-houdini --install-license --install-hfs-symlink --auto-install
+  args:
+    executable: /bin/bash
   register: houdini_install_out
   # become_user: "{{ variable_user }}"
   become: true
@@ -286,6 +302,8 @@
     sudo sed -i '/licensingMode = sesinetd/s/^# //g' /opt/hfs{{ houdini_version_item.houdini_major_version }}/houdini/Licensing.opt
     sudo cat /opt/hfs{{ houdini_version_item.houdini_major_version }}/houdini/Licensing.opt
     /opt/hfs{{ houdini_version_item.houdini_major_version }}/bin/hserver
+  args:
+    executable: /bin/bash
   become: true
   when: houdini_install_type == "server"
 ### END SERVER INSTALL
@@ -305,6 +323,8 @@
     . /etc/profile && echo $PATH
     echo "PATH: $PATH"
     {{ aws_executable }} sts get-caller-identity
+  args:
+    executable: /bin/bash
   become_user: "{{ variable_user }}"
   vars:
     aws_executable: "/usr/local/bin/aws"
