@@ -64,17 +64,18 @@
   vars:
     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
-- name: install python3.11-pip
-  package:
-    name: python3.11-pip
-    state: latest
-  when: not skip_packages
-  become: true
-  vars:
-    ansible_python_interpreter: "{{ package_python_interpreter }}"
+# test remove this because it should already be installed before ansible is used.
+# - name: "install python3.11-pip using {{ package_python_interpreter }}"
+#   package:
+#     name: python3.11-pip
+#     state: latest
+#   when: not skip_packages
+#   become: true
+#   vars:
+#     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
 
-- name: install nmap to open port range for tops
+- name: "install nmap to open port range for tops using {{ package_python_interpreter }}"
   package:
     name: nmap
     state: present
