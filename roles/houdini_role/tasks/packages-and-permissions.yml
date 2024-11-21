@@ -75,13 +75,13 @@
 #     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
 
-- name: "install nmap to open port range for tops using {{ package_python_interpreter }}"
-  package:
-    name: nmap
-    state: present
-  become: true
-  vars:
-    ansible_python_interpreter: "{{ package_python_interpreter }}"
+# - name: "install nmap to open port range for tops using {{ package_python_interpreter }}"
+#   package:
+#     name: nmap
+#     state: present
+#   become: true
+#   vars:
+#     ansible_python_interpreter: "{{ package_python_interpreter }}"
 
 - name: "dir permissions on /opt/houdini_install_script for variable_user {{ variable_user }}"
   file:
