@@ -166,7 +166,7 @@
 
 - name: Creating a file with content
   copy:
-    dest: "/tmp/houdini_download_result.txt"
+    dest: "/var/tmp/houdini_download_result.txt"
     content: |
       {{ build }}
   delegate_to: localhost
