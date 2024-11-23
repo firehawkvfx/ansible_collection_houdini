@@ -4,7 +4,7 @@ enforce_henv: false
 
 # the become sudo pass is only relevent for local installation if required on the host specified.
 ansible_become_pass: "{{ user_deadlineuser_pw }}"
-download_to_dir: /tmp/firehawk
+download_to_dir: /var/tmp/firehawk # tmp has limited storage space and cannot execute on amazon linux
 variable_user: "{{ ansible_user }}"
 bastionip: "{{ groups['bastionip'][0] }}"
 skip_packages: false
