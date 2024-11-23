@@ -47,7 +47,7 @@
 - set_fact:
     houdini_linux_tar_filename: "{{ houdini_version_item.houdini_linux_tar_filename }}"
 
-- name: Query houdini filename - download_houdini.py - Ensure have accepted the EULA and have current keys in your secrets file retrieved from sidefx.com/services/
+- name: "User: {{ansible_user}} Query houdini filename - download_houdini.py - Ensure have accepted the EULA and have current keys in your secrets file retrieved from sidefx.com/services/"
   shell: |
     cd /opt/houdini_install_script/
     . /opt/houdini_install_script/exit_test.sh
@@ -55,7 +55,7 @@
   args:
     executable: /bin/bash
   register: houdini_query_out
-  become: true
+  become: false # don't need to be root to query the houdini version, and requests may not be available as root unless installed that way.
   when: houdini_version_item.houdini_auto_version
   # environment:
     # sesi_client_id: "{{ lookup('env','sesi_client_id') }}"
