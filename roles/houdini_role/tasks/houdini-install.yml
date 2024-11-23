@@ -340,6 +340,12 @@
   shell: |
     . /etc/profile && echo $PATH
     echo "PATH: $PATH"
+    echo "Check aws executable permissions..."
+    set -x
+    ls -ltriah {{ aws_executable }}
+    ls -ld /usr/local/bin
+    ls -ld /usr/local
+    ls -ld /usr
     {{ aws_executable }} sts get-caller-identity
   args:
     executable: /bin/bash
@@ -349,6 +355,7 @@
   tags:
     - sync_installers
 
+# TODO this installer should only be synced once before any images are built
 - name: 's3-sync push houdini installer {{ installers_bucket }}'
   import_role:
     name: s3_sync
