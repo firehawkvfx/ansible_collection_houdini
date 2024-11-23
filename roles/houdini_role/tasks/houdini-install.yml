@@ -169,6 +169,10 @@
     dest: "/var/tmp/houdini_download_result.txt"
     content: |
       {{ build }}
+    mode: u+rw,g+rw,o+rw
+    owner: "{{ variable_user }}"
+    group: syscontrol
+  become: true
   delegate_to: localhost
 
 - name: Install Houdini
