@@ -50,6 +50,7 @@
     variable_user: "deadlineuser"
     houdini_install_type: 'node' # type can be node or server
     houdini_major_version_list: "{{ houdini_version_list | map(attribute='houdini_major_version') }}"
+    # ansible_python_interpreter: "/usr/bin/python3.11"  # this will affect the localhost which could be an issue if not installed
   # vars_files:
   #   - /deployuser/ansible/group_vars/all/vars
 
