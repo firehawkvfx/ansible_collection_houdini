@@ -51,6 +51,20 @@
   shell: |
     cd /opt/houdini_install_script/
     . /opt/houdini_install_script/exit_test.sh
+
+    echo "Permissions for /:"
+    ls -ld /
+
+    echo "Permissions for /opt:"
+    ls -ld /opt
+
+    # Check permissions on the houdini_install_script directory and its contents
+    echo "Permissions for /opt/houdini_install_script:"
+    ls -ld /opt/houdini_install_script
+
+    echo "Permissions for contents of /opt/houdini_install_script:"
+    ls -l /opt/houdini_install_script
+
     sesi_client_id={{ sesi_client_id }} sesi_client_secret_key={{ sesi_client_secret_key }} python3.11 /opt/houdini_install_script/download_houdini.py --buildtype {{ houdini_version_item.houdini_build }} --majorversion {{ houdini_version_item.houdini_major_version }} ; exit_test
   args:
     executable: /bin/bash
