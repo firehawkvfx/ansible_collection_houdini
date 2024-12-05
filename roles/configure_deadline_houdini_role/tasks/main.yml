@@ -1,5 +1,5 @@
 - name: configure houdini.env and deadline for items in list
-  include: houdini-env-config.yml
+  ansible.builtin.include_tasks: houdini-env-config.yml
   loop: "{{ houdini_version_list }}"
   loop_control:
     loop_var: houdini_version_item
@@ -7,6 +7,6 @@
   tags: install_deadline_db
 
 - name: configure houdini and deadline config
-  include: houdini-deadline-config.yml
+  ansible.builtin.include_tasks: houdini-deadline-config.yml
   when: houdini_install_type != "server"
   tags: install_deadline_db
